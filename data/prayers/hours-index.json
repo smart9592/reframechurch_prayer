@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "prime",
+    "title": "제1시 기도",
+    "subtitle": "아침기도, 오전 6시",
+    "timeLabel": "06:00",
+    "hour24": 6,
+    "slideCount": 55
+  },
+  {
+    "slug": "terce",
+    "title": "제3시 기도",
+    "subtitle": "오전 9시",
+    "timeLabel": "09:00",
+    "hour24": 9,
+    "slideCount": 40
+  },
+  {
+    "slug": "sext",
+    "title": "제6시 기도",
+    "subtitle": "정오 12시",
+    "timeLabel": "12:00",
+    "hour24": 12,
+    "slideCount": 40
+  },
+  {
+    "slug": "none",
+    "title": "제9시 기도",
+    "subtitle": "오후 3시",
+    "timeLabel": "15:00",
+    "hour24": 15,
+    "slideCount": 39
+  },
+  {
+    "slug": "vespers",
+    "title": "제11시 기도",
+    "subtitle": "저녁기도, 오후 5시",
+    "timeLabel": "17:00",
+    "hour24": 17,
+    "slideCount": 35
+  },
+  {
+    "slug": "compline",
+    "title": "제12시 기도",
+    "subtitle": "자기 전 기도, 오후 6시",
+    "timeLabel": "18:00",
+    "hour24": 18,
+    "slideCount": 43
+  },
+  {
+    "slug": "midnight",
+    "title": "자정 기도",
+    "subtitle": "밤 12시",
+    "timeLabel": "00:00",
+    "hour24": 0,
+    "slideCount": 109
+  }
+]

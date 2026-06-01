@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "section-a",
+    "title": "섹션 A",
+    "subtitle": "예수님의 보혈 선포 기도문 도입부",
+    "placeholder": false,
+    "slideCount": 20
+  },
+  {
+    "slug": "section-b1",
+    "title": "섹션 B-1",
+    "subtitle": "내 영혼과 속사람에 임한 보혈의 능력 (1)",
+    "placeholder": false,
+    "slideCount": 31
+  },
+  {
+    "slug": "section-b2",
+    "title": "섹션 B-2",
+    "subtitle": "내 영혼과 속사람에 임한 보혈의 능력 (2)",
+    "placeholder": false,
+    "slideCount": 25
+  },
+  {
+    "slug": "section-c",
+    "title": "섹션 C",
+    "subtitle": "(준비 중)",
+    "placeholder": true,
+    "slideCount": 0
+  },
+  {
+    "slug": "section-d",
+    "title": "섹션 D",
+    "subtitle": "주위 환경과 관계에 임한 보혈의 능력",
+    "placeholder": false,
+    "slideCount": 26
+  },
+  {
+    "slug": "section-e",
+    "title": "섹션 E",
+    "subtitle": "몸·장막·시간에 임한 보혈의 능력 + 결론",
+    "placeholder": false,
+    "slideCount": 19
+  }
+]
