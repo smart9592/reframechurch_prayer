@@ -1,5 +1,5 @@
 # 기도의 시간 — 시편기도 · 보혈기도
-
+ 
 조용한 베이지 톤의 모바일 친화형 기도 사이트.
 Next.js (App Router) + Tailwind CSS, Vercel 배포용.
 
