@@ -50,12 +50,13 @@ export default function HourList({ hours }: { hours: HourSummary[] }) {
                       </span>
                     )}
                   </div>
+                  {/* change 5: 장수(slideCount) 제거 */}
                   <p className="mt-0.5 text-xs text-ink-700/60">
-                    {h.subtitle} · {h.slideCount}장
+                    {h.subtitle}
                   </p>
                   {bookmark > 0 && (
                     <p className="mt-1 text-xs text-clay-600">
-                      이어서 보기 · {bookmark + 1} / {h.slideCount}
+                      이어서 보기 · {bookmark + 1}번째 슬라이드
                     </p>
                   )}
                 </div>

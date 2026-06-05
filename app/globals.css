@@ -1,33 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --bg: #FBF7F0;
-  --text: #3D2F1F;
-}
-
-html, body {
-  background-color: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  font-family: 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
-}
-
-/* Disable iOS bouncing on slide viewer */
-.no-overscroll {
-  overscroll-behavior: contain;
-}
-
-/* Smooth scroll for prayer body */
-.prayer-body {
-  white-space: pre-wrap;
-  word-break: keep-all;
-  line-height: 1.9;
-}
+html, body { background-color: #FBF7F0; color: #3D2F1F; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif; }
+.no-overscroll { overscroll-behavior: contain; }
+.prayer-body { white-space: pre-wrap; word-break: keep-all; line-height: 1.9; }

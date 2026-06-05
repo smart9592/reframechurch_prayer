@@ -6,17 +6,10 @@ import { hours, getRecommendedHourSlug } from "@/lib/prayers";
 
 export default function RecommendedPrayer() {
   const [slug, setSlug] = useState<string | null>(null);
-  const [timeStr, setTimeStr] = useState<string>("");
 
   useEffect(() => {
     const update = () => {
-      const now = new Date();
-      const h = now.getHours();
-      const m = now.getMinutes();
-      setSlug(getRecommendedHourSlug(h));
-      setTimeStr(
-        `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`
-      );
+      setSlug(getRecommendedHourSlug(new Date().getHours()));
     };
     update();
     const id = setInterval(update, 60_000);
@@ -38,9 +31,9 @@ export default function RecommendedPrayer() {
       href={`/hours/${slug}`}
       className="block rounded-2xl border border-clay-400/40 bg-gradient-to-br from-cream-100 to-cream-200 p-6 shadow-sm transition active:scale-[0.99]"
     >
-      <div className="flex items-center justify-between text-xs font-medium uppercase tracking-wider text-clay-600">
-        <span>지금 이 시간의 기도</span>
-        <span>{timeStr}</span>
+      {/* change 2: 우측 시간 제거 */}
+      <div className="text-xs font-medium uppercase tracking-wider text-clay-600">
+        지금 이 시간의 기도
       </div>
       <h3 className="mt-3 font-serif text-2xl font-bold text-ink-800">
         {hour.title}
