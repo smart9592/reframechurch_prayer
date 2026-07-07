@@ -7,18 +7,11 @@
     "slideCount": 20
   },
   {
-    "slug": "section-b1",
-    "title": "섹션 B-1",
-    "subtitle": "내 영혼과 속사람에 임한 보혈의 능력 (1)",
+    "slug": "section-b",
+    "title": "섹션 B",
+    "subtitle": "속사람의 각 지체에 임한 보혈의 능력",
     "placeholder": false,
-    "slideCount": 31
-  },
-  {
-    "slug": "section-b2",
-    "title": "섹션 B-2",
-    "subtitle": "내 영혼과 속사람에 임한 보혈의 능력 (2)",
-    "placeholder": false,
-    "slideCount": 25
+    "slideCount": 30
   },
   {
     "slug": "section-c",
