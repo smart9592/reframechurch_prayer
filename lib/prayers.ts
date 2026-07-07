@@ -8,8 +8,7 @@ import hourVespers  from "@/data/prayers/hour-vespers.json";
 import hourCompline from "@/data/prayers/hour-compline.json";
 import hourMidnight from "@/data/prayers/hour-midnight.json";
 import bloodA  from "@/data/prayers/blood-section-a.json";
-import bloodB1 from "@/data/prayers/blood-section-b1.json";
-import bloodB2 from "@/data/prayers/blood-section-b2.json";
+import bloodB  from "@/data/prayers/blood-section-b.json";
 import bloodC  from "@/data/prayers/blood-section-c.json";
 import bloodD  from "@/data/prayers/blood-section-d.json";
 import bloodE  from "@/data/prayers/blood-section-e.json";
@@ -29,10 +28,13 @@ const HOUR_MAP: Record<string, HourDoc> = {
   vespers: hourVespers as HourDoc, compline: hourCompline as HourDoc,
   midnight: hourMidnight as HourDoc,
 };
+
 const BLOOD_MAP: Record<string, BloodDoc> = {
-  "section-a": bloodA as BloodDoc, "section-b1": bloodB1 as BloodDoc,
-  "section-b2": bloodB2 as BloodDoc, "section-c": bloodC as BloodDoc,
-  "section-d": bloodD as BloodDoc, "section-e": bloodE as BloodDoc,
+  "section-a": bloodA as BloodDoc,
+  "section-b": bloodB as BloodDoc,
+  "section-c": bloodC as BloodDoc,
+  "section-d": bloodD as BloodDoc,
+  "section-e": bloodE as BloodDoc,
 };
 
 export function loadHour(slug: string): HourDoc | null { return HOUR_MAP[slug] ?? null; }
