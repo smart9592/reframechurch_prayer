@@ -23,9 +23,9 @@
   {
     "slug": "section-c",
     "title": "섹션 C",
-    "subtitle": "(준비 중)",
-    "placeholder": true,
-    "slideCount": 0
+    "subtitle": "속사람의 각 지체에 임한 보혈의 능력",
+    "placeholder": false,
+    "slideCount": 16
   },
   {
     "slug": "section-d",
