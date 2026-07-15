@@ -3,7 +3,7 @@ import { loadBlood, bloodSections } from "@/lib/prayers";
 import PrayerSlides from "@/components/PrayerSlides";
 
 export async function generateStaticParams() {
-  return bloodSections.filter((s) => !s.placeholder).map((s) => ({ slug: s.slug }));
+  return bloodSections.filter(s => !s.placeholder).map(s => ({ slug: s.slug }));
 }
 
 export default async function BloodSlidesPage({
@@ -14,6 +14,13 @@ export default async function BloodSlidesPage({
   const { slug } = await params;
   const doc = loadBlood(slug);
   if (!doc || doc.placeholder) notFound();
+
+  // 이전/다음 섹션 계산
+  const visibleSections = bloodSections.filter(s => !s.placeholder);
+  const idx = visibleSections.findIndex(s => s.slug === slug);
+  const prevSec = idx > 0 ? visibleSections[idx - 1] : null;
+  const nextSec = idx < visibleSections.length - 1 ? visibleSections[idx + 1] : null;
+
   return (
     <PrayerSlides
       slides={doc.slides}
@@ -22,6 +29,8 @@ export default async function BloodSlidesPage({
       bookmarkKey={`bookmark:blood:${doc.slug}`}
       backHref="/blood"
       backLabel="보혈기도"
+      prevSection={prevSec ? { label: `← ${prevSec.title}`, href: `/blood/${prevSec.slug}` } : undefined}
+      nextSection={nextSec ? { label: `${nextSec.title} →`, href: `/blood/${nextSec.slug}` } : undefined}
     />
   );
 }
