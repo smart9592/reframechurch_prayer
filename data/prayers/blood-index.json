@@ -1,10 +1,17 @@
 [
   {
+    "slug": "intro",
+    "title": "도입부",
+    "subtitle": "예수님의 보혈 선포 기도문",
+    "placeholder": false,
+    "slideCount": 12
+  },
+  {
     "slug": "section-a",
     "title": "섹션 A",
-    "subtitle": "예수님의 보혈 선포 기도문 도입부",
+    "subtitle": "속사람의 각 지체에 임한 보혈의 능력",
     "placeholder": false,
-    "slideCount": 20
+    "slideCount": 7
   },
   {
     "slug": "section-b",
@@ -25,13 +32,20 @@
     "title": "섹션 D",
     "subtitle": "주위 환경과 관계에 임한 보혈의 능력",
     "placeholder": false,
-    "slideCount": 26
+    "slideCount": 13
   },
   {
     "slug": "section-e",
     "title": "섹션 E",
-    "subtitle": "몸·장막·시간에 임한 보혈의 능력 + 결론",
+    "subtitle": "몸·장막·시간에 임한 보혈의 능력",
     "placeholder": false,
-    "slideCount": 19
+    "slideCount": 6
+  },
+  {
+    "slug": "conclusion",
+    "title": "결론",
+    "subtitle": "예수님의 보혈 선포 기도문 마무리",
+    "placeholder": false,
+    "slideCount": 5
   }
 ]
