@@ -18,6 +18,7 @@ import bloodE          from "@/data/prayers/blood-section-e.json";
 import bloodConclusion from "@/data/prayers/blood-conclusion.json";
 
 export type Slide = { title: string; subtitle: string; body: string[]; continues: boolean; };
+export type SlideWithSection = Slide & { sectionTitle: string };
 export type HourSummary = { slug: string; title: string; subtitle: string; timeLabel: string; hour24: number; slideCount: number; };
 export type BloodSummary = { slug: string; title: string; subtitle: string; placeholder: boolean; slideCount: number; };
 export type HourDoc = HourSummary & { slides: Slide[] };
@@ -37,17 +38,31 @@ const HOUR_MAP: Record<string, HourDoc> = {
 };
 
 const BLOOD_MAP: Record<string, BloodDoc> = {
-  "intro":       bloodIntro      as BloodDoc,
-  "section-a":   bloodA          as BloodDoc,
-  "section-b":   bloodB          as BloodDoc,
-  "section-c":   bloodC          as BloodDoc,
-  "section-d":   bloodD          as BloodDoc,
-  "section-e":   bloodE          as BloodDoc,
-  "conclusion":  bloodConclusion as BloodDoc,
+  "intro":      bloodIntro      as BloodDoc,
+  "section-a":  bloodA          as BloodDoc,
+  "section-b":  bloodB          as BloodDoc,
+  "section-c":  bloodC          as BloodDoc,
+  "section-d":  bloodD          as BloodDoc,
+  "section-e":  bloodE          as BloodDoc,
+  "conclusion": bloodConclusion as BloodDoc,
 };
 
 export function loadHour(slug: string): HourDoc | null { return HOUR_MAP[slug] ?? null; }
 export function loadBlood(slug: string): BloodDoc | null { return BLOOD_MAP[slug] ?? null; }
+
+/** 모든 보혈기도 슬라이드를 섹션 순서대로 합쳐서 반환 */
+export function getAllBloodSlides(): SlideWithSection[] {
+  const all: SlideWithSection[] = [];
+  for (const s of bloodSections) {
+    if (s.placeholder) continue;
+    const doc = BLOOD_MAP[s.slug];
+    if (!doc) continue;
+    for (const slide of doc.slides) {
+      all.push({ ...slide, sectionTitle: s.title });
+    }
+  }
+  return all;
+}
 
 export function getRecommendedHourSlug(currentHour: number): string {
   const sorted = [...hours].sort((a, b) => a.hour24 - b.hour24);
