@@ -22,6 +22,7 @@ export default async function HourSlidesPage({
       bookmarkKey={`bookmark:hour:${doc.slug}`}
       backHref="/hours"
       backLabel="시편기도"
+      homeHref="/hours"
     />
   );
 }
