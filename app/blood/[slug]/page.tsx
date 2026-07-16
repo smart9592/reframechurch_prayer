@@ -15,7 +15,6 @@ export default async function BloodSlidesPage({
   const doc = loadBlood(slug);
   if (!doc || doc.placeholder) notFound();
 
-  // 이전/다음 섹션 계산
   const visibleSections = bloodSections.filter(s => !s.placeholder);
   const idx = visibleSections.findIndex(s => s.slug === slug);
   const prevSec = idx > 0 ? visibleSections[idx - 1] : null;
@@ -29,6 +28,7 @@ export default async function BloodSlidesPage({
       bookmarkKey={`bookmark:blood:${doc.slug}`}
       backHref="/blood"
       backLabel="보혈기도"
+      homeHref="/blood"
       prevSection={prevSec ? { label: `← ${prevSec.title}`, href: `/blood/${prevSec.slug}` } : undefined}
       nextSection={nextSec ? { label: `${nextSec.title} →`, href: `/blood/${nextSec.slug}` } : undefined}
     />
