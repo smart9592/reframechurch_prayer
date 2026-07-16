@@ -20,6 +20,12 @@ export default async function BloodSlidesPage({
   const prevSec = idx > 0 ? visibleSections[idx - 1] : null;
   const nextSec = idx < visibleSections.length - 1 ? visibleSections[idx + 1] : null;
 
+  const tocItems = visibleSections.map(s => ({
+    label: s.title,
+    sublabel: s.subtitle,
+    href: `/blood/${s.slug}`,
+  }));
+
   return (
     <PrayerSlides
       slides={doc.slides}
@@ -31,6 +37,7 @@ export default async function BloodSlidesPage({
       homeHref="/blood"
       prevSection={prevSec ? { label: `← ${prevSec.title}`, href: `/blood/${prevSec.slug}` } : undefined}
       nextSection={nextSec ? { label: `${nextSec.title} →`, href: `/blood/${nextSec.slug}` } : undefined}
+      tocItems={tocItems}
     />
   );
 }
