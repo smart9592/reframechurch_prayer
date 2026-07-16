@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Slide, SlideWithSection } from "@/lib/prayers";
 
 type SectionNav = { label: string; href?: string; onClick?: () => void };
+type TocItem = { label: string; sublabel?: string; href?: string; onClick?: () => void };
 
 type Props = {
   slides: (Slide | SlideWithSection)[];
@@ -19,6 +20,7 @@ type Props = {
   nextSection?: SectionNav;
   allSectionsList?: { title: string; slug: string }[];
   sectionStartMap?: Record<string, number>;
+  tocItems?: TocItem[];
 };
 
 type FontSize = "small" | "medium" | "large";
@@ -67,16 +69,88 @@ function NavButton({ nav }: { nav: SectionNav }) {
   return <button style={style} onClick={nav.onClick}>{nav.label}</button>;
 }
 
+// ── TOC 드로어 ───────────────────────────────────────────────────────────
+function TOCDrawer({
+  open, onClose, items, docTitle,
+}: {
+  open: boolean;
+  onClose: () => void;
+  items: TocItem[];
+  docTitle: string;
+}) {
+  return (
+    <>
+      {open && (
+        <div onClick={onClose} className="fixed inset-0 z-40 bg-black/30" />
+      )}
+      <div
+        className="fixed top-0 right-0 bottom-0 z-50 flex flex-col bg-cream-50 shadow-xl"
+        style={{
+          width: "72%", maxWidth: "280px",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      >
+        <div className="flex items-center justify-between border-b border-cream-200 px-4 py-3">
+          <span className="font-serif text-sm font-bold text-ink-800">목차</span>
+          <button onClick={onClose} className="px-1 text-lg text-ink-700/50">✕</button>
+        </div>
+        <div className="flex-1 overflow-y-auto py-2">
+          {items.map((item, i) => {
+            const inner = (
+              <>
+                {item.sublabel && (
+                  <p className="mb-0.5 text-[10px] font-medium text-ink-700/50">{item.sublabel}</p>
+                )}
+                <span className="font-serif text-sm font-bold text-ink-800 leading-snug">
+                  {item.label}
+                </span>
+              </>
+            );
+            const cls = "w-full text-left border-l-[3px] border-transparent px-4 py-3 transition-colors hover:bg-cream-100 active:bg-cream-200";
+            if (item.href) {
+              return (
+                <Link key={i} href={item.href} onClick={onClose}
+                  className={cls + " block no-underline"}>
+                  {inner}
+                </Link>
+              );
+            }
+            return (
+              <button key={i} onClick={() => { item.onClick?.(); onClose(); }} className={cls}>
+                {inner}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── 햄버거 아이콘 ────────────────────────────────────────────────────────
+function HamburgerIcon() {
+  return (
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
+      <rect y="0" width="14" height="1.5" rx="0.75" fill="#3D2F1F" />
+      <rect y="5" width="14" height="1.5" rx="0.75" fill="#3D2F1F" />
+      <rect y="10" width="14" height="1.5" rx="0.75" fill="#3D2F1F" />
+    </svg>
+  );
+}
+
 export default function PrayerSlides({
   slides, docTitle, bookmarkKey, backHref, backLabel,
   homeHref, initialIndex = 0,
   prevSection: prevSectionProp, nextSection: nextSectionProp,
   allSectionsList, sectionStartMap,
+  tocItems,
 }: Props) {
   const [index, setIndex] = useState(initialIndex);
   const [fontSize, setFontSize] = useState<FontSize>("medium");
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [saveMsg, setSaveMsg] = useState("");
+  const [tocOpen, setTocOpen] = useState(false);
   const total = slides.length;
 
   const isAllMode = !!allSectionsList && !!sectionStartMap;
@@ -110,6 +184,20 @@ export default function PrayerSlides({
         },
       }
     : nextSectionProp;
+
+  // 전체보기 모드일 때 TOC 자동 생성 (섹션 클릭 → 슬라이드 점프)
+  const autoTocItems: TocItem[] | undefined = isAllMode
+    ? allSectionsList!.map(s => ({
+        label: s.title,
+        onClick: () => {
+          setIndex(sectionStartMap![s.title] ?? 0);
+          window.scrollTo({ top: 0 });
+        },
+      }))
+    : undefined;
+
+  // 명시적 tocItems 우선, 없으면 자동 생성
+  const effectiveTocItems = tocItems ?? autoTocItems;
 
   useEffect(() => {
     const savedFont = window.localStorage.getItem(FONT_KEY) as FontSize | null;
@@ -180,22 +268,25 @@ export default function PrayerSlides({
 
       <header className="sticky top-0 z-10 border-b border-cream-200/60 bg-cream-50/85 backdrop-blur">
         <div className="mx-auto max-w-md px-4">
-          {/* 섹션 네비: 이전섹션 / 홈 / 다음섹션 */}
+          {/* 이전섹션 / 홈 / 다음섹션+햄버거 */}
           <div className="flex items-center justify-between pt-3 pb-1">
             <div className="flex-1 flex justify-start">
-              {prevSection
-                ? <NavButton nav={prevSection} />
-                : <div className="w-16" />}
+              {prevSection ? <NavButton nav={prevSection} /> : <div className="w-16" />}
             </div>
             <Link href={homeHref ?? "/"}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-cream-200 bg-white/70 active:bg-cream-100 text-base"
               aria-label="홈으로">
               🏠
             </Link>
-            <div className="flex-1 flex justify-end">
-              {nextSection
-                ? <NavButton nav={nextSection} />
-                : <div className="w-16" />}
+            <div className="flex-1 flex justify-end items-center gap-2">
+              {effectiveTocItems && (
+                <button
+                  onClick={() => setTocOpen(true)}
+                  className="flex h-7 w-7 items-center justify-center rounded-md border border-cream-200 bg-white/70 active:bg-cream-100"
+                  aria-label="목차">
+                  <HamburgerIcon />
+                </button>
+              )}
             </div>
           </div>
 
@@ -224,7 +315,10 @@ export default function PrayerSlides({
           <div className="border-t border-cream-200/60 bg-cream-100/80 px-4 py-2">
             <div className="mx-auto flex max-w-md items-center justify-between">
               <span className="text-xs text-ink-700/70">📌 {savedAt + 1}번째 슬라이드에서 저장됨</span>
-              <button onClick={goToSaved} className="text-xs font-medium text-clay-600 underline underline-offset-2">이어보기</button>
+              <button onClick={goToSaved}
+                className="text-xs font-medium text-clay-600 underline underline-offset-2">
+                이어보기
+              </button>
             </div>
           </div>
         )}
@@ -274,6 +368,15 @@ export default function PrayerSlides({
           </div>
         </div>
       </nav>
+
+      {effectiveTocItems && (
+        <TOCDrawer
+          open={tocOpen}
+          onClose={() => setTocOpen(false)}
+          items={effectiveTocItems}
+          docTitle={docTitle}
+        />
+      )}
     </div>
   );
 }
