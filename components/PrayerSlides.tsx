@@ -13,9 +13,10 @@ type Props = {
   bookmarkKey: string;
   backHref: string;
   backLabel: string;
+  homeHref?: string;
+  initialIndex?: number;
   prevSection?: SectionNav;
   nextSection?: SectionNav;
-  // 전체보기 모드: 섹션 목록 + 섹션 시작 인덱스 맵
   allSectionsList?: { title: string; slug: string }[];
   sectionStartMap?: Record<string, number>;
 };
@@ -61,27 +62,23 @@ function NavButton({ nav }: { nav: SectionNav }) {
     display: "flex", alignItems: "center", gap: "3px", padding: 0,
   } as React.CSSProperties;
   if (nav.href) {
-    return (
-      <Link href={nav.href} style={{ ...style, textDecoration: "none" }}>
-        {nav.label}
-      </Link>
-    );
+    return <Link href={nav.href} style={{ ...style, textDecoration: "none" }}>{nav.label}</Link>;
   }
   return <button style={style} onClick={nav.onClick}>{nav.label}</button>;
 }
 
 export default function PrayerSlides({
   slides, docTitle, bookmarkKey, backHref, backLabel,
+  homeHref, initialIndex = 0,
   prevSection: prevSectionProp, nextSection: nextSectionProp,
   allSectionsList, sectionStartMap,
 }: Props) {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(initialIndex);
   const [fontSize, setFontSize] = useState<FontSize>("medium");
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [saveMsg, setSaveMsg] = useState("");
   const total = slides.length;
 
-  // 전체보기 모드에서 현재 슬라이드의 섹션 계산
   const isAllMode = !!allSectionsList && !!sectionStartMap;
   const currentSlide = slides[index] as SlideWithSection;
   const currentSectionTitle = isAllMode
@@ -181,10 +178,8 @@ export default function PrayerSlides({
     <div className="no-overscroll flex min-h-dvh flex-col"
          onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
 
-      {/* 상단 바 */}
       <header className="sticky top-0 z-10 border-b border-cream-200/60 bg-cream-50/85 backdrop-blur">
         <div className="mx-auto max-w-md px-4">
-
           {/* 섹션 네비: 이전섹션 / 홈 / 다음섹션 */}
           <div className="flex items-center justify-between pt-3 pb-1">
             <div className="flex-1 flex justify-start">
@@ -192,7 +187,7 @@ export default function PrayerSlides({
                 ? <NavButton nav={prevSection} />
                 : <div className="w-16" />}
             </div>
-            <Link href="/"
+            <Link href={homeHref ?? "/"}
               className="flex h-8 w-8 items-center justify-center rounded-full border border-cream-200 bg-white/70 active:bg-cream-100 text-base"
               aria-label="홈으로">
               🏠
@@ -220,13 +215,11 @@ export default function PrayerSlides({
           </div>
         </div>
 
-        {/* 진행 바 */}
         <div className="h-0.5 bg-cream-200">
           <div className="h-full bg-clay-400 transition-all duration-300"
                style={{ width: `${progress}%` }} />
         </div>
 
-        {/* 이어보기 배너 */}
         {savedAt !== null && savedAt !== index && (
           <div className="border-t border-cream-200/60 bg-cream-100/80 px-4 py-2">
             <div className="mx-auto flex max-w-md items-center justify-between">
@@ -237,7 +230,6 @@ export default function PrayerSlides({
         )}
       </header>
 
-      {/* 본문 */}
       <article className="flex-1 px-5 py-8">
         <div className="mx-auto max-w-md">
           {header && (
@@ -261,7 +253,6 @@ export default function PrayerSlides({
         </div>
       </article>
 
-      {/* 하단 버튼 */}
       <nav className="sticky bottom-0 border-t border-cream-200/60 bg-cream-50/85 backdrop-blur">
         <div className="mx-auto max-w-md px-4 py-3 space-y-2">
           <div className="flex justify-center">
