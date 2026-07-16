@@ -7,10 +7,9 @@ export default async function BloodAllPage({
   searchParams: Promise<{ start?: string }>;
 }) {
   const { start } = await searchParams;
-  const startIndex = start ? parseInt(start, 10) : 0;
+  const initialIndex = start ? Math.max(0, parseInt(start, 10)) : 0;
   const slides = getAllBloodSlides();
 
-  // 섹션 시작 인덱스 맵 계산
   const sectionStartMap: Record<string, number> = {};
   let cur = "";
   slides.forEach((s, i) => {
@@ -28,6 +27,8 @@ export default async function BloodAllPage({
       bookmarkKey="bookmark:blood:all"
       backHref="/blood"
       backLabel="보혈기도"
+      homeHref="/blood"
+      initialIndex={initialIndex}
       allSectionsList={bloodSections
         .filter(s => !s.placeholder)
         .map(s => ({ title: s.title, slug: s.slug }))}
