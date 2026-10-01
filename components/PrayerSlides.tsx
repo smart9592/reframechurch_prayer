@@ -21,6 +21,7 @@ type Props = {
   allSectionsList?: { title: string; slug: string }[];
   sectionStartMap?: Record<string, number>;
   tocItems?: TocItem[];
+  nextHref?: string;  // ← 추가
 };
 
 type FontSize = "small" | "medium" | "large";
@@ -140,6 +141,13 @@ function HamburgerIcon() {
 }
 
 export default function PrayerSlides({
+  slides, docTitle, bookmarkKey, backHref, backLabel,
+  homeHref, initialIndex = 0,
+  prevSection: prevSectionProp, nextSection: nextSectionProp,
+  allSectionsList, sectionStartMap,
+  tocItems,
+  nextHref,  // ← 추가
+}: Props) {
   slides, docTitle, bookmarkKey, backHref, backLabel,
   homeHref, initialIndex = 0,
   prevSection: prevSectionProp, nextSection: nextSectionProp,
@@ -361,7 +369,18 @@ export default function PrayerSlides({
               className="flex h-12 flex-1 items-center justify-center rounded-xl border border-cream-200 bg-white/60 text-ink-800 transition active:scale-[0.98] disabled:opacity-40">
               ← 이전
             </button>
-            <button onClick={goNext} disabled={index === total - 1}
+            <button onClick={goNext} {index === total - 1 && nextHref ? (
+  <Link
+    href={nextHref}
+    className="flex h-12 flex-1 items-center justify-center rounded-xl bg-clay-500 text-white transition active:scale-[0.98]">
+    다음 →
+  </Link>
+) : (
+  <button onClick={goNext} disabled={index === total - 1}
+    className="flex h-12 flex-1 items-center justify-center rounded-xl bg-clay-500 text-white transition active:scale-[0.98] disabled:opacity-40">
+    다음 →
+  </button>
+)}
               className="flex h-12 flex-1 items-center justify-center rounded-xl bg-clay-500 text-white transition active:scale-[0.98] disabled:opacity-40">
               다음 →
             </button>
