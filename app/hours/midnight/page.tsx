@@ -70,28 +70,17 @@ export default async function MidnightPage({ searchParams }: PageProps) {
     )
   }
 
-  // ── 기본: 시작 기도 (인트로) ─────────────────────────────────────────
-  return (
-    <>
-      <PrayerSlides
-        slides={introSlides}
-        docTitle="자정 기도"
-        docSubtitle="밤 12시"
-        bookmarkKey="midnight-intro"
-        backHref="/hours"
-        backLabel="기도의 시간"
-      />
-      {/* 인트로를 마친 뒤 파수 선택으로 이동하는 고정 버튼 */}
-      <div className="fixed bottom-20 inset-x-0 flex justify-center z-40 pointer-events-none">
-        <Link
-          href="/hours/midnight?view=select"
-          className="pointer-events-auto inline-flex items-center gap-2 bg-[#B8956A] hover:bg-[#7A5C3B] active:bg-[#6B4E2E] text-white text-sm font-medium px-6 py-3 rounded-full shadow-lg transition-colors duration-200"
-        >
-          파수 선택하기
-          <span aria-hidden>→</span>
-        </Link>
-      </div>
-    </>
+return (
+    <PrayerSlides
+      slides={introSlides}
+      docTitle="자정 기도"
+      docSubtitle="밤 12시"
+      bookmarkKey="midnight-intro"
+      backHref="/hours"
+      backLabel="기도의 시간"
+      nextHref="/hours/midnight?view=select"
+    />
+  )
   )
 }
 
