@@ -1,24 +1,12 @@
 // app/hours/midnight/page.tsx
-//
-// 자정 기도 전용 페이지.
-// Next.js App Router에서 정적 세그먼트(midnight)가 동적 세그먼트([slug])보다
-// 우선순위가 높으므로, 이 파일이 /hours/midnight 경로를 처리합니다.
-//
-// ?view 쿼리 파라미터로 화면을 전환합니다:
-//   (없음)   → 시작 기도 (인트로, slides 0–12)
-//   select   → 파수 선택 화면
-//   pasu1    → 첫 번째 파수 (slides 13–57)
-//   pasu2    → 두 번째 파수 (slides 58–76)
-//   pasu3    → 세 번째 파수 (slides 77–108)
 
 import { loadHour } from '@/lib/prayers'
 import PrayerSlides from '@/components/PrayerSlides'
 import Link from 'next/link'
 
-// JSON 분석으로 확인한 파수 경계 인덱스
-const FIRST_PASU_IDX  = 13  // "첫 번째 파수"
-const SECOND_PASU_IDX = 58  // "두 번째 파수"
-const THIRD_PASU_IDX  = 77  // "세 번째 파수"
+const FIRST_PASU_IDX  = 13
+const SECOND_PASU_IDX = 58
+const THIRD_PASU_IDX  = 77
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -70,7 +58,8 @@ export default async function MidnightPage({ searchParams }: PageProps) {
     )
   }
 
-return (
+  // ── 기본: 시작 기도 (인트로) ─────────────────────────────────────────
+  return (
     <PrayerSlides
       slides={introSlides}
       docTitle="자정 기도"
@@ -80,7 +69,6 @@ return (
       backLabel="기도의 시간"
       nextHref="/hours/midnight?view=select"
     />
-  )
   )
 }
 
