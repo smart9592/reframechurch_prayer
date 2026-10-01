@@ -32,7 +32,8 @@ export default async function MidnightPage({ searchParams }: PageProps) {
   const params = await searchParams
   const view = typeof params.view === 'string' ? params.view : undefined
 
-  const doc   = await loadHour('midnight')
+  const doc = await loadHour('midnight')
+  if (!doc) return <div className="p-8 text-center text-[#8B6E56]">기도문을 불러올 수 없습니다.</div>
   const { slides } = doc
 
   const introSlides = slides.slice(0, FIRST_PASU_IDX)
