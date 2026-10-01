@@ -4,9 +4,9 @@ import { loadHour } from '@/lib/prayers'
 import PrayerSlides from '@/components/PrayerSlides'
 import Link from 'next/link'
 
-const FIRST_PASU_IDX  = 13
-const SECOND_PASU_IDX = 58
-const THIRD_PASU_IDX  = 77
+const FIRST_PASU_IDX  = 14
+const SECOND_PASU_IDX = 59
+const THIRD_PASU_IDX  = 78
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
